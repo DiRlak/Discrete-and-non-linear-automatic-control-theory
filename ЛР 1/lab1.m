@@ -22,46 +22,46 @@ Ts = 1/100;
 
 %3. Получние переходных характеристик
     %Непрерывной системы
-%W = tf(num, den);
-%figure;
-%step(W);
-%title('Переходная характеристика непрерывной системы');
+W = tf(num, den);
+figure;
+step(W);
+title('Переходная характеристика непрерывной системы');
 
     %Дискретной системы, полученной методом экстраполятора 0-го порядка
-%[x0] = dstep(numDz0, denDz0, 161);
-%t = 0:0.01:1.6;
-%figure;
-%stairs(t, x0);
-%title('Переходная характеристика дискретной системы (ZOH)');
+[x0] = dstep(numDz0, denDz0, 161);
+t = 0:0.01:1.6;
+figure;
+stairs(t, x0);
+title('Переходная характеристика дискретной системы (ZOH)');
 
     %Дискретной системы, полученной методом экстраполятора 1-го порядка
-%[x1] = dstep(numDz1, denDz1, 161);
-%t = 0:0.01:1.6;
-%figure;
-%stairs(t, x1);
-%title('Переходная характеристика дискретной системы (FOH)');
+[x1] = dstep(numDz1, denDz1, 161);
+t = 0:0.01:1.6;
+figure;
+stairs(t, x1);
+title('Переходная характеристика дискретной системы (FOH)');
 
     %Дискретной системы, полученной методом преобразования Тастина
-%[xT] = dstep(numDzT, denDzT, 161);
-%t = 0:0.01:1.6;
-%figure;
-%stairs(t, xT);
-%title('Переходная характеристика дискретной системы (Тастин)');
+[xT] = dstep(numDzT, denDzT, 161);
+t = 0:0.01:1.6;
+figure;
+stairs(t, xT);
+title('Переходная характеристика дискретной системы (Тастин)');
 
 %5. Проведение исследования колебательного годографа
 %   и определение устойчивости системы
     %Отображение колебательного годографа непрерывной системы
-%figure;
-%nyquist(W);
-%grid on;
-%title('Годограф Найквиста');
+figure;
+nyquist(W);
+grid on;
+title('Годограф Найквиста');
 
     %Отображение нулей и полюсов непрерывной системы
-%figure;
-%pzmap(W);
-%axis([-22 2 -12 12])
-%grid on;
-%title('Полюса и нули непрерывной системы');
+figure;
+pzmap(W);
+axis([-22 2 -12 12])
+grid on;
+title('Полюса и нули непрерывной системы');
 
     %Отображение нулей и полюсов дискр. сист. 0-го порядка
 sysD0 = tf(numDz0, denDz0, Ts);
@@ -71,32 +71,32 @@ zgrid;
 title('Полюса и нули дискретной системы (ZOH)');
 
     %Отображение нулей и полюсов дискр. сист. 1-го порядка
-%figure;
-%pzmap(numDz1,denDz1);
-%axis([0.75 1.05 -0.15 0.15])
-%zgrid;
-%title('Полюса и нули дискретной системы (FOH)');
+figure;
+pzmap(numDz1,denDz1);
+axis([0.75 1.05 -0.15 0.15])
+zgrid;
+title('Полюса и нули дискретной системы (FOH)');
 
     %Отображение нулей и полюсов дискр. сист. преобразования Тастина
-%figure;
-%pzmap(numDzT,denDzT);
-%axis([0.75 1.05 -0.15 0.15])
-%zgrid;
-%title('Полюса и нули дискретной системы (Тастин)');
+figure;
+pzmap(numDzT,denDzT);
+axis([0.75 1.05 -0.15 0.15])
+zgrid;
+title('Полюса и нули дискретной системы (Тастин)');
 
 %Преобразование непрерывной системы к виду модели в пространстве состояний
-%[A, B, C, D] = tf2ss(num, den);
-%disp('Матрица A:'); disp(A);
-%disp('Матрица B:'); disp(B);
-%disp('Матрица C:'); disp(C);
-%disp('Матрица D:'); disp(D);
+[A, B, C, D] = tf2ss(num, den);
+disp('Матрица A:'); disp(A);
+disp('Матрица B:'); disp(B);
+disp('Матрица C:'); disp(C);
+disp('Матрица D:'); disp(D);
 
 %Получение дискретной модели, описанной методом пространства состояний
-%[F,G,H,J] = c2dm (A, B, C, D, Ts, 'zoh');
-%disp('Матрица F:'); disp(F);
-%disp('Матрица G:'); disp(G);
-%disp('Матрица H:'); disp(H);
-%disp('Матрица J:'); disp(J);
+[F,G,H,J] = c2dm (A, B, C, D, Ts, 'zoh');
+disp('Матрица F:'); disp(F);
+disp('Матрица G:'); disp(G);
+disp('Матрица H:'); disp(H);
+disp('Матрица J:'); disp(J);
 
 %Применение команды Ltiview с различными параметрами
 sysC = tf(num, den);
@@ -105,9 +105,9 @@ sysD_1 = c2d(sysC, Ts, 'foh');
 sysD_T = c2d(sysC, Ts, 'tustin');
 
 
-%ltiview(sysD_0, sysD_1, sysD_T);
-%ltiview('impulse', sysC, sysD_0);
-%ltiview('pzmap', sysC);
-%ltiview('pzmap', sysD_1);
-%ltiview({'bode', 'nyquist'}, sysC);
-%ltiview({'bode', 'nyquist'}, sysD_T);
+ltiview(sysD_0, sysD_1, sysD_T);
+ltiview('impulse', sysC, sysD_0);
+ltiview('pzmap', sysC);
+ltiview('pzmap', sysD_1);
+ltiview({'bode', 'nyquist'}, sysC);
+ltiview({'bode', 'nyquist'}, sysD_T);
